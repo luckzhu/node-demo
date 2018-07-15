@@ -19,23 +19,32 @@ var server = http.createServer(function(request, response){
 
   /******** 从这里开始看，上面不要看 ************/
 
-
-
-
-
-
-
-
-
-
-
-
-
   console.log('方方说：得到 HTTP 路径\n' + path)
   console.log('方方说：查询字符串为\n' + query)
   console.log('方方说：不含查询字符串的路径为\n' + pathNoQuery)
-  response.write('Hi')
-  response.end()
+  
+  if(path == '/index'){
+    response.setHeader('Content-Type', 'text/html; charset=utf-8')
+    response.write('<!DOCTYPE>\n<html>' + 
+      '<head><link rel="stylesheet" href="/style.css">' + 
+      '<script src="/main.js"></script></head>' + 
+      '<body><div class="container"><h1>当你看到这一行字的时候，你已经被我催眠了！</h1></div>' + 
+      '</body></html>')
+    response.end()
+  }else if(path == "/style.css"){
+    response.setHeader('Content-Type', 'text/css; charset=utf-8')
+    response.write('h1{background-color: #ddd; color: red;}' + 
+      '.container{display: flex; justify-content: center;}')
+    response.end()
+  }else if(path == "/main.js"){
+    response.setHeader('Content-Type', 'text/js; charset=utf-8')
+    response.write('alert("这是JS执行的哦")')
+    response.end()
+  }else{
+    response.statusCode = 404
+    response.end()
+  }
+  
 
 
 
